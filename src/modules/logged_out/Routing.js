@@ -3,9 +3,10 @@ import PropTypes from "prop-types";
 import { Switch, Redirect } from "react-router-dom";
 import PropsRoute from "../shared/components/PropsRoute";
 import Home from "./home/Home";
+import Welcome from '../logged_in/selectDashboard/Welcome1' 
 
 const Routing = (props) => {
-  const { boardList, selectBoard, selectHome } = props;
+  const { boardList, selectBoard, selectWelcome, selectHome } = props;
   return (
     <Switch>
       {/* {boardList.map(post => (
@@ -21,6 +22,7 @@ const Routing = (props) => {
       ))} */}
       )
       <PropsRoute exact path="/home" component={Home} selectHome={selectHome} />)
+      <PropsRoute exact path="/welcome" component={Welcome} selectDashboard={selectWelcome} />)
       <Redirect to="/home" />
     </Switch>
   );

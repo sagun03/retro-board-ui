@@ -5,7 +5,7 @@ import theme from "./theme";
 import GlobalStyles from "./GlobalStyles";
 import * as serviceWorker from "./serviceWorker";
 
-// const LoggedInComponent = lazy(() => import("./logged_in/components/Main"));
+const LoggedInComponent = lazy(() => import("./modules/logged_in/Dashboard"));
 
 const LoggedOutComponent = lazy(() => import("./modules/logged_out/Board"));
 
@@ -17,9 +17,9 @@ function App() {
         <GlobalStyles />
         <Suspense fallback={<Fragment />}>
           <Switch>
-            {/* <Route path="/c">
+            <Route path="/welcome">
               <LoggedInComponent />
-            </Route> */}
+            </Route>
             <Route>
               <LoggedOutComponent />
             </Route>

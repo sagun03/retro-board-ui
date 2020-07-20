@@ -26,16 +26,14 @@ const Board = (props) => {
   const [dialogOpen, setDialogOpen] = useState(null);
 
   const selectHome = useCallback(() => {
-    // smoothScrollTop();
     document.title =
-      "WaVer - Free template for building an SaaS or admin application";
+      "Retro-home"
     setSelectedTab("Home");
   }, [setSelectedTab]);
 
-  const selectBlog = useCallback(() => {
-    // smoothScrollTop();
-    document.title = "WaVer - Blog";
-    setSelectedTab("Blog");
+  const selectBoard = useCallback(() => {
+    document.title = "Retro-board";
+    setSelectedTab("Board");
   }, [setSelectedTab]);
 
   // const openLoginDialog = useCallback(() => {
@@ -64,29 +62,6 @@ const Board = (props) => {
     setIsDrawerOpen(false);
   }, [setIsDrawerOpen]);
 
-  // const openChangePasswordDialog = useCallback(() => {
-  //   setDialogOpen("changePassword");
-  // }, [setDialogOpen]);
-
-  // const fetchBlogPosts = useCallback(() => {
-  //   const blogPosts = dummyBlogPosts.map((blogPost) => {
-  //     let title = blogPost.title;
-  //     title = title.toLowerCase();
-  //     /* Remove unwanted characters, only accept alphanumeric and space */
-  //     title = title.replace(/[^A-Za-z0-9 ]/g, "");
-  //     /* Replace multi spaces with a single space */
-  //     title = title.replace(/\s{2,}/g, " ");
-  //     /* Replace space with a '-' symbol */
-  //     title = title.replace(/\s/g, "-");
-  //     blogPost.url = `/blog/post/${title}`;
-  //     blogPost.params = `?id=${blogPost.id}`;
-  //     return blogPost;
-  //   });
-  //   setBlogPosts(blogPosts);
-  // }, [setBlogPosts]);
-
-  // useEffect(fetchBlogPosts, []);
-
   return (
     <div className={classes.wrapper}>
       {/* <DialogSelector
@@ -108,7 +83,7 @@ const Board = (props) => {
       />
       <Routing
         selectHome={selectHome}
-        selectBlog={selectBlog}
+        selectBoard={selectBoard}
       />
       {/* <Footer /> */}
     </div>

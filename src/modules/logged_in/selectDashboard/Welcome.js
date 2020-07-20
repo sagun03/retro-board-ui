@@ -12,8 +12,7 @@ import {
   withWidth,
   isWidthUp
 } from "@material-ui/core";
-import { Link } from 'react-router-dom';
-import headerImage from "../images/Retro.png";
+// import headerImage from "../images/Retro.png";
 
 const styles = theme => ({
   extraLargeButtonLabel: {
@@ -22,9 +21,12 @@ const styles = theme => ({
       fontSize: theme.typography.h6.fontSize
     }
   },
-  style: {
-    textDecoration: 'none',
-    color: 'white',
+  textBody: {
+    display: "flex",
+    justifyContent: "flex-start",
+    flexDirection: "column",
+    marginLeft: '5em',
+    marginTop: '3em',
   },
   extraLargeButton: {
     paddingTop: theme.spacing(1.5),
@@ -70,7 +72,7 @@ const styles = theme => ({
   },
   wrapper: {
     position: "relative",
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: '#F8F8F8',
     paddingBottom: theme.spacing(2)
   },
   image: {
@@ -102,11 +104,39 @@ const styles = theme => ({
   }
 });
 
-function HeadSection(props) {
+function Welcome(props) {
   const { classes, theme, width } = props;
   return (
     <Fragment>
-      <div className={classNames("lg-p-top", classes.wrapper)}>
+      <div className={classNames(classes.wrapper)}>
+      <div>
+      <Box className={classes.textBody} >
+            <Typography
+              variant="h5"
+            //   className={style ? classes.brandText1 : classes.brandText}
+              display="inline"
+            //   color={style ? 'white' : 'primary'}
+            >
+              WELCOME
+            </Typography>
+            <Typography
+              variant="h4"
+            //   className={style ? classes.brandText1 : classes.brandText}
+              display="inline"
+            //   color={style ? 'white' : 'secondary'}
+            >
+              Plan Manager
+            </Typography>
+            <Typography
+              variant="h5"
+            //   className={style ? classes.brandText1 : classes.brandText}
+              display="inline"
+            //   color={style ? 'white' : 'secondary'}
+            >
+              Prepare planning briefs for your buyers, and track your planning and briefing process for buyers You can record detail about the brief, as well as the detail across channel groups, their respective channels and local geographies.
+            </Typography>
+            </Box>
+          </div>
         <div className={classNames("container-fluid", classes.container)}>
           <Box display="flex" justifyContent="center" className="row">
             <Card
@@ -116,15 +146,6 @@ function HeadSection(props) {
             >
               <div className={classNames(classes.containerFix, "container")}>
                 <Box justifyContent="space-between" className="row">
-                <Hidden smDown>
-                    <Grid item md={6}>
-                      <img
-                        src={headerImage}
-                        className={classes.image}
-                        alt="header example"
-                      />
-                    </Grid>
-                  </Hidden>
                   <Grid item xs={12} md={5}>
                     <Box
                       display="flex"
@@ -157,7 +178,7 @@ Retrospectives 🔥
                           className={classes.extraLargeButton}
                           classes={{ label: classes.extraLargeButtonLabel }}
                         >
-                          <Link to="/welcome" className={classes.style}>Get Started</Link>
+                          Get Started
                         </Button>
                       </div>
                     </Box>
@@ -172,12 +193,12 @@ Retrospectives 🔥
   );
 }
 
-HeadSection.propTypes = {
+Welcome.propTypes = {
   classes: PropTypes.object,
   width: PropTypes.string,
   theme: PropTypes.object
 };
 
 export default withWidth()(
-  withStyles(styles, { withTheme: true })(HeadSection)
+  withStyles(styles, { withTheme: true })(Welcome)
 );
