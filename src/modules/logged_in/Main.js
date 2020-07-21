@@ -10,7 +10,7 @@ const styles = (theme) => ({
       overflowX: "hidden",
     },
   });
-  const Dashboard = (props) => {
+  const Main = (props) => {
     const { classes } = props;
     const [selectedTab, setSelectedTab] = useState(null);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -58,5 +58,5 @@ const styles = (theme) => ({
     );
   };
   
-  export default withStyles(styles, { withTheme: true })(memo(Dashboard));
+  export default withStyles(styles, { withTheme: true })(memo(Main));
   

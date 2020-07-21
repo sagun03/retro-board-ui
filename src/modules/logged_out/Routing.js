@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Switch, Redirect } from "react-router-dom";
 import PropsRoute from "../shared/components/PropsRoute";
 import Home from "./home/Home";
-import Welcome from '../logged_in/selectDashboard/Welcome1' 
+import Boards from '../logged_in/Boards' 
 
 const Routing = (props) => {
   const { boardList, selectBoard, selectWelcome, selectHome } = props;
@@ -20,9 +20,8 @@ const Routing = (props) => {
           content={post.content}
         />
       ))} */}
-      )
-      <PropsRoute exact path="/home" component={Home} selectHome={selectHome} />)
-      <PropsRoute exact path="/welcome" component={Welcome} selectDashboard={selectWelcome} />)
+      <PropsRoute exact path="/home" component={Home} selectHome={selectHome} />
+      <PropsRoute exact path="/board" component={Boards} />
       <Redirect to="/home" />
     </Switch>
   );
