@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 
-const Fallback = props => {
+const Fallback = ({openModal, handleModal}) => {
   return (
     <>
       <Box>
@@ -28,6 +28,7 @@ const Fallback = props => {
           color="secondary"
           size="medium"
           startIcon={<AddCircleOutlineIcon />}
+          onClick={() => handleModal(true)}
         >
           Create first board
         </Button>

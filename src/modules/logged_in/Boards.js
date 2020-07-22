@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState, memo } from "react";
 import { Box, Typography, Button } from "@material-ui/core";
 import Fallback from './Fallback';
+import CreateBoardModal from './CreateBoardModal';
 
 const Boards = props => {
+  const [openModal, handleModal] = useState(false);
   return (
     <Box display="flex" style={{ backgroundColor: "#f4f6ff" }}>
       <Box
@@ -27,6 +29,7 @@ const Boards = props => {
           color="secondary"
           variant="contained"
           size="large"
+          onClick={() => handleModal(true)}
         >
           Create Board
         </Button>
@@ -46,10 +49,11 @@ const Boards = props => {
           flexDirection="row"
           alignItems="stretch"
         >
-          <Fallback />
+          <Fallback openModal={openModal} handleModal={handleModal} />
         </Box>
+        {openModal && <CreateBoardModal handleModal={handleModal} />}
       </Box>
     </Box>
   );
 };
-export default Boards;
+export default memo(Boards);
