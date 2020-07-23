@@ -54,11 +54,11 @@ const TemplateBoard = props => {
           >
             List of items in selected template
           </Typography>
-          <ol>
+          <ul>
             {selectedTemplate.value.map(value => (
               <li>{value}</li>
             ))}
-          </ol>
+          </ul>
         </div>
       )}
     </div>
