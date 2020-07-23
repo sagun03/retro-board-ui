@@ -1,14 +1,15 @@
-import React, { Fragment, Suspense, lazy } from "react";
+import React, { Fragment, Suspense, lazy,  } from "react";
 import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import theme from "./theme";
+import PrivateRoutes, { AuthRoutes } from './routes/index';
 import GlobalStyles from "./GlobalStyles";
 import * as serviceWorker from "./serviceWorker";
 import Apollo from "./Apollo";
 
-const LoggedInComponent = lazy(() => import("./modules/logged_in/Main"));
-
-const LoggedOutComponent = lazy(() => import("./modules/logged_out/Board"));
+const Home = lazy(() => import("./pages/home"));
+const Fallback = lazy(() => import("./pages/fallBack"));
+const Board = lazy(() => import("./pages/board"));
 
 function App() {
   return (
@@ -19,12 +20,13 @@ function App() {
           <GlobalStyles />
           <Suspense fallback={<Fragment />}>
             <Switch>
-              <Route path="/welcome">
-                <LoggedInComponent />
+              <Route exact path="/">
+                <Redirect to="/login" />
               </Route>
-              <Route>
-                <LoggedOutComponent />
-              </Route>
+              {/* <AuthRoutes exact path="/login" component={Login} /> */}
+              <PrivateRoutes path="/home-page" component={Home} />
+              <PrivateRoutes path="/board-page" component={Board} />
+              <PrivateRoutes component={Fallback} />
             </Switch>
           </Suspense>
         </MuiThemeProvider>
