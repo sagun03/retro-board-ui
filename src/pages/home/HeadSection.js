@@ -13,7 +13,7 @@ import {
   isWidthUp
 } from "@material-ui/core";
 import { Link } from 'react-router-dom';
-import headerImage from "../../../public/Retro.png";
+import headerImage from "./images/Retro.png";
 
 const styles = theme => ({
   extraLargeButtonLabel: {

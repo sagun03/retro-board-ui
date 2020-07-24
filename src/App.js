@@ -21,10 +21,10 @@ function App() {
           <Suspense fallback={<Fragment />}>
             <Switch>
               <Route exact path="/">
-                <Redirect to="/login" />
+                <Redirect to="/home-page" />
               </Route>
-              {/* <AuthRoutes exact path="/login" component={Login} /> */}
-              <PrivateRoutes path="/home-page" component={Home} />
+              <AuthRoutes exact path="/home-page" component={Home} />
+              {/* <PrivateRoutes path="/home-page" component={Home} /> */}
               <PrivateRoutes path="/board-page" component={Board} />
               <PrivateRoutes component={Fallback} />
             </Switch>

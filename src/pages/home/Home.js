@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import HeadSection from "./HeadSection";
 
 function Home(props) {
-  const { selectHome } = props;
-  useEffect(() => {
-    selectHome();
-  }, [selectHome]);
+  // const { selectHome } = props;
+  // useEffect(() => {
+  //   selectHome();
+  // }, [selectHome]);
   return (
       <HeadSection />
   );

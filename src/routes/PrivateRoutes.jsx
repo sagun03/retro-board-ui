@@ -7,13 +7,13 @@ const PrivateRoutes = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={matchProps => (
-      localStorage.Token
-        ? (
+      // localStorage.Token
+        // ? (
           <PrivateLayout>
             <Component {...matchProps} {...rest} />
           </PrivateLayout>
-        )
-        : <Redirect to="/login" />
+        // )
+        // : <Redirect to="/home-page" />
     )}
   />
 );

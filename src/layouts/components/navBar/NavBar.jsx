@@ -72,13 +72,13 @@ const NavBar = (props) => {
       link: "/home-page",
       name: "Home",
       icon: <HomeIcon className="text-white" />,
-      onClick: selectHome(),
+      onClick: () => selectHome(),
     },
     {
       link: "/board-page",
       name: "Board",
       icon: <BookIcon className="text-white" />,
-      onClick: selectBoard(),
+      onClick: () => selectBoard(),
     },
     {
       name: "Register",
@@ -146,6 +146,7 @@ const NavBar = (props) => {
                       <Button
                         size="large"
                         classes={style ? { root: classes.menuButtonText1 } : { text: classes.menuButtonText }}
+                        onClick={element.onClick}
                         >
                         {element.name}
                       </Button>
