@@ -51,7 +51,7 @@ const Boards = props => {
         >
           <Fallback openModal={openModal} handleModal={handleModal} />
         </Box>
-        {openModal && <CreateBoardModal handleModal={handleModal} />}
+        {openModal && <CreateBoardModal handleModal={handleModal} {...props} />}
       </Box>
     </Box>
   );

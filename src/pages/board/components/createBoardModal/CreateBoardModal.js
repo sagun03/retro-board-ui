@@ -13,12 +13,14 @@ import Select from "@material-ui/core/Select";
 import CustomBoard from "../customBoard";
 import TemplateBoard from "../templateBoard";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import TextField from "@material-ui/core/TextField";
 
-const CreateBoardModal = ({ handleModal }) => {
-  const [boardType, handleBoardType] = useState("");
-  const handleBoardSelect = ({ target: { value } }) => {
-    handleBoardType(value);
+const CreateBoardModal = ({ handleModal, history }) => {
+  const [boardContent, handleBoardContent] = useState({name: '', type: ''});
+  const handleBoard = (recognizer) => ({ target: { value } }) => {
+    handleBoardContent({...boardContent, [recognizer]: value});
   };
+  const {type, name} = boardContent;
   return (
     <Dialog
       open
@@ -31,10 +33,22 @@ const CreateBoardModal = ({ handleModal }) => {
           You can create your board by using the templates provided or can
           create your own custom board
         </DialogContentText>
+        <TextField
+                  value={name}
+                  label="Board Name *"
+                  style={{ margin: 2 }}
+                  // placeholder=""
+                    fullWidth
+                  margin="normal"
+                  onChange={handleBoard('name')}
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
         <FormControl>
           <Select
-            value={boardType}
-            onChange={handleBoardSelect}
+            value={type}
+            onChange={handleBoard('type')}
             displayEmpty
             //   className={classes.selectEmpty}
             inputProps={{ "aria-label": "Without label" }}
@@ -47,11 +61,11 @@ const CreateBoardModal = ({ handleModal }) => {
           </Select>
           <FormHelperText>Select your board type</FormHelperText>
         </FormControl>
-        {boardType === "custom" && <CustomBoard handleModal={handleModal} />}
-        {boardType === "template" && (
+        {type === "custom" && <CustomBoard handleModal={handleModal} />}
+        {type === "template" && (
           <TemplateBoard handleModal={handleModal} />
         )}
-        {(boardType === "custom" || boardType === "template") && (
+        {(type === "custom" || type === "template") && (
           <Box
             display="flex"
             flexDirection="row"
@@ -72,6 +86,7 @@ const CreateBoardModal = ({ handleModal }) => {
               variant="outlined"
               size="large"
               startIcon={<AddCircleOutlineIcon />}
+              onClick={() => history.push('/notes')}
             >
               Create Board
             </Button>

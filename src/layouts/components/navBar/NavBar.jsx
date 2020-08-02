@@ -69,13 +69,13 @@ const NavBar = (props) => {
   }, [setSelectedTab]);
   const menuItems = [
     {
-      link: "/home-page",
+      link: "/home",
       name: "Home",
       icon: <HomeIcon className="text-white" />,
       onClick: () => selectHome(),
     },
     {
-      link: "/board-page",
+      link: "/board",
       name: "Board",
       icon: <BookIcon className="text-white" />,
       onClick: () => selectBoard(),

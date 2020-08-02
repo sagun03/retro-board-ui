@@ -7,13 +7,13 @@ const AuthRoutes = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={matchProps => (
-      localStorage.Token
-        ? <Redirect to="/board-page" />
-        : (
+      // localStorage.Token
+      //   ? <Redirect to="/board" />
+      //   : (
           <AuthLayout>
             <Component {...matchProps} {...rest} />
           </AuthLayout>
-        )
+        // )
 
     )}
   />

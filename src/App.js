@@ -10,6 +10,7 @@ import Apollo from "./Apollo";
 const Home = lazy(() => import("./pages/home"));
 const Fallback = lazy(() => import("./pages/fallBack"));
 const Board = lazy(() => import("./pages/board"));
+const Notes = lazy(() => import("./pages/notes"))
 
 function App() {
   return (
@@ -21,11 +22,12 @@ function App() {
           <Suspense fallback={<Fragment />}>
             <Switch>
               <Route exact path="/">
-                <Redirect to="/home-page" />
+                <Redirect to="/home" />
               </Route>
-              <AuthRoutes exact path="/home-page" component={Home} />
+              <AuthRoutes exact path="/home" component={Home} />
               {/* <PrivateRoutes path="/home-page" component={Home} /> */}
-              <PrivateRoutes path="/board-page" component={Board} />
+              <PrivateRoutes path="/board" component={Board} />
+              <PrivateRoutes path="/notes" component={Notes} />
               <PrivateRoutes component={Fallback} />
             </Switch>
           </Suspense>
