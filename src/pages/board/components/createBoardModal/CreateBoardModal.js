@@ -19,7 +19,6 @@ const CreateBoardModal = ({ handleModal }) => {
   const handleBoardSelect = ({ target: { value } }) => {
     handleBoardType(value);
   };
-  console.log("board type-", boardType);
   return (
     <Dialog
       open
