@@ -5,11 +5,13 @@ import Box from "@material-ui/core/Box";
 import GridListTile from "@material-ui/core/GridListTile";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import Button from "@material-ui/core/Button";
 import MyCard from "./Card";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import SortIcon from "@material-ui/icons/Sort";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 export default props => {
   //** columns is mock data for now */
@@ -70,22 +72,29 @@ export default props => {
           <GridListTile key={id}>
             <Paper elevation={4} style={{ padding: "1em" }}>
               <Box display="flex" flexDirection="column" alignItems="center">
-                <Box display="flex" flexDirection="row" justifyContent="space-between">
-                  <Box display="flex" flexDirection="row">
-                    <Typography
-                      component="p"
-                      variant="h4"
-                      color="textPrimary"
-                    >
+                <Box display="flex" flexDirection="row">
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="flex-start"
+                  >
+                    <Typography component="p" variant="h4" color="textPrimary">
                       {name}
                     </Typography>
                     <IconButton size="medium">
                       <EditIcon fontSize="inherit" />
                     </IconButton>
                   </Box>
-                  <Box display="flex" flexDirection="row"  justifyContent="flex-end">
+                  <Box
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="flex-end"
+                  >
                     <IconButton size="medium">
                       <SortIcon fontSize="inherit" />
+                    </IconButton>
+                    <IconButton size="medium">
+                      <AddCircleOutlineIcon fontSize="inherit" />
                     </IconButton>
                     <IconButton size="medium">
                       <MoreVertIcon fontSize="inherit" />

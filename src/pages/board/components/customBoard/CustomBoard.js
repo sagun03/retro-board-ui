@@ -8,25 +8,24 @@ import Box from "@material-ui/core/Box";
 import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
 
-const CustomBoard = ({handleModal}) => {
-  const [columns, handleColumns] = useState([""]);
+const CustomBoard = ({handleModal, handleBoardColumns, columns}) => {
   const addColumn = () => {
     const newColumnsInstance = [...columns];
     newColumnsInstance.push("");
-    handleColumns(newColumnsInstance);
+    handleBoardColumns(newColumnsInstance);
   };
   const handleDelete = (index) => () => {
     const newColumnsInstance = [...columns];
     newColumnsInstance.splice(index, 1);
-    handleColumns(newColumnsInstance);
+    handleBoardColumns(newColumnsInstance);
   }
   const handleChange = index => ({ target: { value } }) => {
     const newColumnsInstance = [...columns];
     newColumnsInstance[index] = value;
-    handleColumns(newColumnsInstance);
+    handleBoardColumns(newColumnsInstance);
   };
   const handleClearAll = () => {
-    handleColumns(['']);
+    handleBoardColumns(['']);
   }
   return (
     <>

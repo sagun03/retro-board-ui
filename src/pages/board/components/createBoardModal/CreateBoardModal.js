@@ -16,11 +16,14 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import TextField from "@material-ui/core/TextField";
 
 const CreateBoardModal = ({ handleModal, history }) => {
-  const [boardContent, handleBoardContent] = useState({name: '', type: ''});
-  const handleBoard = (recognizer) => ({ target: { value } }) => {
-    handleBoardContent({...boardContent, [recognizer]: value});
+  const [boardContent, handleBoardContent] = useState({ name: "", type: "" , columns: ['']});
+  const handleBoard = recognizer => ({ target: { value } }) => {
+    handleBoardContent({ ...boardContent, [recognizer]: value });
   };
-  const {type, name} = boardContent;
+  const handleBoardColumns = (value) => {
+    handleBoardContent({...boardContent, columns: value});
+  }
+  const { type, name, columns } = boardContent;
   return (
     <Dialog
       open
@@ -34,23 +37,21 @@ const CreateBoardModal = ({ handleModal, history }) => {
           create your own custom board
         </DialogContentText>
         <TextField
-                  value={name}
-                  label="Board Name *"
-                  style={{ margin: 2 }}
-                  // placeholder=""
-                    fullWidth
-                  margin="normal"
-                  onChange={handleBoard('name')}
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                />
+          value={name}
+          label="Board Name *"
+          style={{ margin: 2 }}
+          fullWidth
+          margin="normal"
+          onChange={handleBoard("name")}
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
         <FormControl>
           <Select
             value={type}
-            onChange={handleBoard('type')}
+            onChange={handleBoard("type")}
             displayEmpty
-            //   className={classes.selectEmpty}
             inputProps={{ "aria-label": "Without label" }}
           >
             <MenuItem value="">
@@ -61,10 +62,9 @@ const CreateBoardModal = ({ handleModal, history }) => {
           </Select>
           <FormHelperText>Select your board type</FormHelperText>
         </FormControl>
-        {type === "custom" && <CustomBoard handleModal={handleModal} />}
-        {type === "template" && (
-          <TemplateBoard handleModal={handleModal} />
-        )}
+        {type === "custom" && <CustomBoard handleModal={handleModal} columns={columns} handleBoardColumns={handleBoardColumns} />}
+        {/* TODO: handle columns managerment for template board */}
+        {type === "template" && <TemplateBoard handleModal={handleModal} columns={columns} handleBoardColumns={handleBoardColumns} />}
         {(type === "custom" || type === "template") && (
           <Box
             display="flex"
@@ -72,7 +72,6 @@ const CreateBoardModal = ({ handleModal, history }) => {
             justifyContent="space-between"
           >
             <Button
-              // fullWidth
               color="default"
               variant="contained"
               size="large"
@@ -81,12 +80,11 @@ const CreateBoardModal = ({ handleModal, history }) => {
               Cancel
             </Button>
             <Button
-              // fullWidth
               color="secondary"
               variant="outlined"
               size="large"
               startIcon={<AddCircleOutlineIcon />}
-              onClick={() => history.push('/notes')}
+              onClick={() => history.push("/notes")}
             >
               Create Board
             </Button>
