@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -14,13 +14,52 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Typography from "@material-ui/core/Typography";
 
 export default ({ notes }) => {
+  const [flag, SetFlag] = useState(false)
+  console.log('>>>flag', flag)
+  const handleKeyPress = (event) => {
+    // sepcifically for enter
+    if (event.charCode === 13) {
+      event.preventDefault();
+      SetFlag(false)
+  }
+  }
+  const contentData = (content) => {
+    if(!flag) {
+    return <Typography onClick={() => SetFlag(!flag)} style={{ textAlign: 'center' }}>
+              {content}
+            </Typography>;
+    }
+    return (
+    <TextField
+                value={content}
+                style={{ margin: 2 }}
+                id="outlined-basic"
+                placeholder={`Add your note`}
+                fullWidth
+                variant="outlined"
+                multiline
+                color="secondary"
+                onKeyPress={(event) => handleKeyPress(event)}
+                onBlur={() => SetFlag(false)}
+                //   onChange={handleChange(index)}
+                //                   InputLabelProps={{
+                //                       classes: {
+                //                           root: { '&$focused$notchedOutline': {
+                //       borderColor: 'green'
+                //    }}
+                //                       }
+                // style:{color: 'white', outline: 'none', input:focus}
+                //   }}
+              />);
+    }
   return (
     <>
       {notes.map(({ id, content, user }) => (
         <Card style={{ minWidth: 275, margin: "0.3em" }} variant="outlined">
-          <CardContent>
-            <div style={{ borderRadius: 0 }}>
-              <TextField
+          <CardContent style={{ backgroundColor: '#E9F4FF'}}  >
+            {contentData(content) }
+            {/* <div style={{ borderRadius: 0 }}> */}
+              {/* {flag && <TextField
                 value={content}
                 style={{ margin: 2 }}
                 placeholder={`Add your note`}
@@ -38,8 +77,8 @@ export default ({ notes }) => {
                 //                       }
                 // style:{color: 'white', outline: 'none', input:focus}
                 //   }}
-              />
-            </div>
+              />} */}
+            {/* </div> */}
           </CardContent>
           <CardActions>
           {/* TODO: Why flex propery is not working!!!!!!!!!!!!!!  */}
