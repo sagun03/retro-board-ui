@@ -15,7 +15,6 @@ import Typography from "@material-ui/core/Typography";
 
 export default ({ notes }) => {
   const [flag, SetFlag] = useState(false)
-  console.log('>>>flag', flag)
   const handleKeyPress = (event) => {
     // sepcifically for enter
     if (event.charCode === 13) {

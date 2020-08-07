@@ -57,9 +57,9 @@ const CustomBoard = ({handleModal, handleBoardColumns, columns}) => {
                     shrink: true
                   }}
                 />
-                <IconButton aria-label="Delete" onClick={handleDelete(index)}>
+                {(columns.length>1) && <IconButton aria-label="Delete" onClick={handleDelete(index)}>
                   <DeleteIcon fontSize="medium" />
-                </IconButton>
+                </IconButton>}
               </Box>
             </>
           ))}

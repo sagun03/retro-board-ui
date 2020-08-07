@@ -5,7 +5,7 @@ import theme from "./theme";
 import PrivateRoutes, { AuthRoutes } from './routes/index';
 import GlobalStyles from "./GlobalStyles";
 import * as serviceWorker from "./serviceWorker";
-import Apollo from "./Apollo";
+import Apollo from './Apollo';
 
 const Home = lazy(() => import("./pages/home"));
 const Fallback = lazy(() => import("./pages/fallBack"));
@@ -26,8 +26,8 @@ function App() {
               </Route>
               <AuthRoutes exact path="/home" component={Home} />
               {/* <PrivateRoutes path="/home-page" component={Home} /> */}
-              <PrivateRoutes path="/board" component={Board} />
-              <PrivateRoutes path="/notes" component={Notes} />
+              <PrivateRoutes exact path="/board" component={Board} />
+              <PrivateRoutes exact path="/notes/:id" component={Notes} />
               <PrivateRoutes component={Fallback} />
             </Switch>
           </Suspense>

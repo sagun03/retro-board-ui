@@ -14,14 +14,25 @@ import CustomBoard from "../customBoard";
 import TemplateBoard from "../templateBoard";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import TextField from "@material-ui/core/TextField";
+import { CREATE_BOARD } from './graphQL/Mutation';
+import { useMutation } from '@apollo/client';
 
 const CreateBoardModal = ({ handleModal, history }) => {
   const [boardContent, handleBoardContent] = useState({ name: "", type: "" , columns: ['']});
+  const [createBoard, { data, loading, error }] = useMutation(CREATE_BOARD);
   const handleBoard = recognizer => ({ target: { value } }) => {
     handleBoardContent({ ...boardContent, [recognizer]: value });
   };
   const handleBoardColumns = (value) => {
     handleBoardContent({...boardContent, columns: value});
+  }
+  const handleCreateBoard = () => {
+    const { type, name, columns } = boardContent;
+    console.log('name, type, columns ', name, type, columns )
+    createBoard({ variables: { input: { name, type, columns } }}).then((res) => {
+      const { data: { createBoard : { id } } } = res;
+      history.push(`/notes/${id}`)
+    });
   }
   const { type, name, columns } = boardContent;
   return (
@@ -84,7 +95,8 @@ const CreateBoardModal = ({ handleModal, history }) => {
               variant="outlined"
               size="large"
               startIcon={<AddCircleOutlineIcon />}
-              onClick={() => history.push("/notes")}
+              onClick={() => handleCreateBoard()}
+              loading={loading}
             >
               Create Board
             </Button>
