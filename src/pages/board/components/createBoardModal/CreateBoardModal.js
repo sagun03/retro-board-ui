@@ -95,7 +95,7 @@ const CreateBoardModal = ({ handleModal, history }) => {
               variant="outlined"
               size="large"
               startIcon={<AddCircleOutlineIcon />}
-              onClick={() => handleCreateBoard()}
+              onClick={handleCreateBoard}
               loading={loading}
             >
               Create Board

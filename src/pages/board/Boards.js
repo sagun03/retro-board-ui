@@ -8,7 +8,7 @@ const Boards = props => {
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
   return (
-    <BoardData boardData={data} />
+    <BoardData boardData={data} {...props}/>
   )
 };
 export default memo(Boards);
