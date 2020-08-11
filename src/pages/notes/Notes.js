@@ -12,51 +12,21 @@ import EditIcon from "@material-ui/icons/Edit";
 import SortIcon from "@material-ui/icons/Sort";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { useQuery } from '@apollo/client';
+import { GET_BOARD_COLUMN_NOTE } from './graphQl/Queries';
+import { withRouter } from 'react-router-dom';
 
-export default props => {
-  //** columns is mock data for now */
-  const columns = [
-    {
-      id: 1,
-      name: "test",
-      notes: [
-        {
-          id: "testId1",
-          content:
-            "note 1 testsdfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
-        },
-        { id: "testId2", content: "note 1 test", user: "chirag" },
-        { id: "testId1", content: "note 1 test", user: "chirag" },
-        { id: "testId1", content: "note 1 test", user: "chirag" },
-        { id: "testId1", content: "note 1 test", user: "chirag" },
-        { id: "testId1", content: "note 1 test", user: "test" }
-      ]
-    },
-    {
-      id: 2,
-      name: "test 2",
-      user: "chirag",
-      notes: [
-        { id: "testId1", content: "note 2 test", user: "chirag" },
-        { id: "testId2", content: "note 2 test", user: "test user" }
-      ]
-    },
-    { id: 3, name: "test 3", notes: [] },
-    {
-      id: 4,
-      name: "test4 ",
-      user: "chirag",
-      notes: [
-        { id: "testId1", content: "note 4 test", user: "anonymous" },
-        { id: "testId2", content: "note 4 test", user: "anonymous" }
-      ]
-    }
-  ];
+const Notes = props => {
+  const { match: { params: { id} = {} } = {} } = props;
+  const { loading, error, data } = useQuery(GET_BOARD_COLUMN_NOTE, { variables: { id }});
+  if (loading) return <div>Loading........</div>
+  if (error) return <div>Something went wrong.........</div>
+  const { getNotesByBoardId: { name, columns = []} ={} } = data || {};
   return (
     <>
       <Box display="flex" flexDirection="row" justifyContent="center">
         <Typography component="p" variant="h4" color="textPrimary">
-          Board Name
+          {name}
         </Typography>
         <IconButton size="medium">
           <EditIcon fontSize="inherit" />
@@ -113,3 +83,5 @@ export default props => {
     </>
   );
 };
+
+export default withRouter(Notes);
