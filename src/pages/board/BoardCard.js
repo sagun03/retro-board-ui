@@ -38,7 +38,7 @@ function shadeColor(hex, percent) {
 }
 
 function BoardCard(props) {
-  const { classes, Icon, color, name, status } = props;
+  const { classes, Icon, color, name, status, history, id } = props;
   return (
     // <Fragment>
     //   <div class="card" style={{
@@ -71,7 +71,7 @@ function BoardCard(props) {
   <h2 class="transition">Board Name: {name}</h2>
   <Divider variant='middle' style={{ backgroundColor: shadeColor(color, 0.5) }}/>
   <p>Board Status: {status}</p>
-  <div class="cta-container transition"><a href="#" class="cta">GO TO BOARD</a></div>
+  <div class="cta-container transition"><a href="#" class="cta" onClick={() => history.push(`/notes/${id}`)}>GO TO BOARD</a></div>
   <div class="card_circle transition"></div>
 </div>
   );

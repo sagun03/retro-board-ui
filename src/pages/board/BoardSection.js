@@ -12,7 +12,7 @@ import calculateSpacing from "./calculateSpacing";
 import BoardCard from "./BoardCard";
 
 function BoardSection(props) {
-  const { width, getBoardData, handleModal } = props;
+  const { width, getBoardData, handleModal, history } = props;
   return (
     <div style={{ backgroundColor: "#FFFFFF", paddingBottom: "5rem" }}>
       <div className="container-fluid lg-p-top">
@@ -30,13 +30,15 @@ function BoardSection(props) {
         </Typography>
         <div className="container-fluid">
           <Grid container spacing={calculateSpacing(width)}>
-            {getBoardData.map(element => (
-              <Grid item xs={4} md={3} key={element.name}>
+            {getBoardData.map(({ name, status, id }) => (
+              <Grid item xs={4} md={3} key={name}>
                 <BoardCard
                   Icon={<DeveloperBoardIcon style={{ fontSize: 30 }} />}
                   color={"#" + (((1 << 24) * Math.random()) | 0).toString(16)}
-                  name={element.name}
-                  status={element.status}
+                  name={name}
+                  status={status}
+                  history={history}
+                  id={id}
                 />
               </Grid>
             ))}

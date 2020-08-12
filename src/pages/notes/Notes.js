@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Paper from "@material-ui/core/Paper";
 import GridList from "@material-ui/core/GridList";
 import Box from "@material-ui/core/Box";
@@ -15,15 +15,19 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { useQuery } from '@apollo/client';
 import { GET_BOARD_COLUMN_NOTE } from './graphQl/Queries';
 import { withRouter } from 'react-router-dom';
+import CreateNoteModal from './CreateNoteModal';
 
 const Notes = props => {
   const { match: { params: { id} = {} } = {} } = props;
+  // NOTE: openAddNoteModal is the columnId of the column on will add button is clicked.
+  const [openAddNoteModal, handleAddNoteModal] = useState(null);
   const { loading, error, data } = useQuery(GET_BOARD_COLUMN_NOTE, { variables: { id }});
   if (loading) return <div>Loading........</div>
   if (error) return <div>Something went wrong.........</div>
   const { getNotesByBoardId: { name, columns = []} ={} } = data || {};
   return (
     <>
+    {openAddNoteModal && <CreateNoteModal handleAddNoteModal={handleAddNoteModal} columnId={openAddNoteModal} />}
       <Box display="flex" flexDirection="row" justifyContent="center">
         <Typography component="p" variant="h4" color="textPrimary">
           {name}
@@ -63,7 +67,7 @@ const Notes = props => {
                     <IconButton size="medium">
                       <SortIcon fontSize="inherit" />
                     </IconButton>
-                    <IconButton size="medium">
+                    <IconButton size="medium" onClick={() => handleAddNoteModal(id)}>
                       <AddCircleOutlineIcon fontSize="inherit" />
                     </IconButton>
                     <IconButton size="medium">

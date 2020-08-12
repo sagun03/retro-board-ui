@@ -6,7 +6,7 @@ const GetBoards = props => {
   const { openModal, handleModal, getBoardData } = props;
   return (
     <>
-  <BoardSection getBoardData={getBoardData} handleModal={handleModal}/>
+  <BoardSection {...props} />
   </>
   );
 };
