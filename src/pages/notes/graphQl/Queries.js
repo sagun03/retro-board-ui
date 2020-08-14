@@ -14,6 +14,7 @@ const GET_BOARD_COLUMN_NOTE = gql`
                 likes
                 content
                 dislikes
+                user
               }
             }
         }

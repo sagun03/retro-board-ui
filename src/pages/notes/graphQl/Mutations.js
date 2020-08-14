@@ -12,4 +12,9 @@ const CREATE_NOTE = gql`
   }
 `;
 
-export {CREATE_NOTE};
+const UPDATE_NOTE = gql`
+  mutation updateNote($input: NoteInput!) {
+    updateNote(input: $input)
+  }
+`;
+export {CREATE_NOTE, UPDATE_NOTE};
