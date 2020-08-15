@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 const styles = () => ({
   footer: {
-    height: '30px',
+    padding: '.7rem',
     textAlign: 'center',
   },
   size: {

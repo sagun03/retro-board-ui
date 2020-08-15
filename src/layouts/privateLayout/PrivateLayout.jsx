@@ -6,7 +6,7 @@ import Footer from '../components/footer';
 
 
 const style = {
-  padding: '30px',
+  padding: '1.875rem 1.875rem 0',
 };
 const PrivateLayout = ({ children }) => (
   <>

@@ -4,6 +4,7 @@ import {
   Grid,
   Typography,
   isWidthUp,
+  Box,
   withWidth,
   Button
 } from "@material-ui/core";
@@ -14,26 +15,16 @@ import BoardCard from "./BoardCard";
 function BoardSection(props) {
   const { width, getBoardData, handleModal, history } = props;
   return (
-    <div style={{ backgroundColor: "#FFFFFF", paddingBottom: "5rem" }}>
-      <div className="container-fluid lg-p-top">
-        <Button
-          style={{ position: "absolute", right: "6.5em" }}
-          color="secondary"
-          variant="contained"
-          size="large"
-          onClick={() => handleModal(true)}
-        >
-          Create Board
-        </Button>
-        <Typography variant="h3" align="left" style={{ marginBottom: "66px" }}>
+    <Box style={{ backgroundColor: "#FFFFFF", paddingBottom: "5rem", minHeight: "30rem" }}>
+      <Box style={{padding: '1rem'}}>
+        <Typography variant="h4" align="left" style={{ margin: "2.1rem 4rem 3.2rem" }}>
           Boards
         </Typography>
-        <div className="container-fluid">
+        <Box className="container-fluid">
           <Grid container spacing={calculateSpacing(width)}>
             {getBoardData.map(({ name, status, id }) => (
               <Grid item xs={4} md={3} key={name}>
                 <BoardCard
-                  Icon={<DeveloperBoardIcon style={{ fontSize: 30 }} />}
                   color={"#" + (((1 << 24) * Math.random()) | 0).toString(16)}
                   name={name}
                   status={status}
@@ -43,9 +34,9 @@ function BoardSection(props) {
               </Grid>
             ))}
           </Grid>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

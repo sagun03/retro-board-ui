@@ -12,12 +12,11 @@ const Fallback = ({openModal, handleModal}) => {
         <img
           src={headerImage}
           alt="random"
-          style={{ maxHeight: "50em", maxWidth: "50em" }}
+          style={{ maxHeight: "50em", maxWidth: "50em", margin: '1.1rem' }}
         />
       </Box>
       <Box display="flex" flexDirection="column" style={{ margin: "auto" }}>
         <Typography
-          component="p"
           variant="h6"
           color="textSecondary"
           gutterBottom

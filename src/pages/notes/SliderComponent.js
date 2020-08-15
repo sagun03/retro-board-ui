@@ -55,16 +55,16 @@ const SliderComponent = (props) => {
   }
   const handleChange = (event, value) => {
     if(value === 100) {
-      setSlideCssConfig({gridColsValue: 2, columnNameVariant: "h4", columnNameButtonSize: "medium", noteMainBoxWidth: '45rem', noteNameMarginLeft: '16rem', cardMainBoxWidth: '44rem' })
+      setSlideCssConfig({gridColsValue: 2, columnNameVariant: "h4", columnNameButtonSize: "medium", noteMainBoxWidth: '45rem', cardMainBoxWidth: '44rem' })
     }
     if(value === 64) {
-      setSlideCssConfig({gridColsValue: 3, columnNameVariant: "h4", columnNameButtonSize: "medium", noteMainBoxWidth: '29rem', noteNameMarginLeft: '6rem', cardMainBoxWidth: '28rem' })
+      setSlideCssConfig({gridColsValue: 3, columnNameVariant: "h4", columnNameButtonSize: "medium", noteMainBoxWidth: '29rem', cardMainBoxWidth: '28rem' })
     }
     if(value === 32) {
-      setSlideCssConfig({gridColsValue: 4, columnNameVariant: "h5", columnNameButtonSize: "small", noteMainBoxWidth: '21.5rem', noteNameMarginLeft: '6rem', cardMainBoxWidth: '20.5rem' })
+      setSlideCssConfig({gridColsValue: 4, columnNameVariant: "h5", columnNameButtonSize: "small", noteMainBoxWidth: '21.5rem', cardMainBoxWidth: '20.5rem' })
     }
     if(value === 0) {
-      setSlideCssConfig({gridColsValue: 5, columnNameVariant: "h5", columnNameButtonSize: "small", noteMainBoxWidth: '16.5rem', noteNameMarginLeft: '3rem', cardMainBoxWidth: '15.5rem' })
+      setSlideCssConfig({gridColsValue: 5, columnNameVariant: "h5", columnNameButtonSize: "small", noteMainBoxWidth: '16.5rem', cardMainBoxWidth: '15.5rem' })
     }
   }
   return (

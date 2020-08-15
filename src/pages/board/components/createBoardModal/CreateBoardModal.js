@@ -39,8 +39,8 @@ const CreateBoardModal = ({ handleModal, history }) => {
     <Dialog
       open
       onClose={() => handleModal(false)}
-      aria-labelledby="form-dialog-title"
-    >
+      aria-labelledby="customized-dialog-title"
+      >
       <DialogTitle>Create Retro board</DialogTitle>
       <DialogContent>
         <DialogContentText>

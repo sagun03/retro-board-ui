@@ -31,7 +31,7 @@ const styles = theme => ({
 });
 const Notes = props => {
   const { match: { params: { id} = {} } = {}, width, classes } = props;
-  const [slideConfig, setSlideCssConfig] = useState({gridColsValue: 2, columnNameVariant: "h4", columnNameButtonSize: "medium", noteMainBoxWidth: '45rem', noteNameMarginLeft: '16rem', cardMainBoxWidth: '44rem' })
+  const [slideConfig, setSlideCssConfig] = useState({gridColsValue: 2, columnNameVariant: "h4", columnNameButtonSize: "medium", noteMainBoxWidth: '45rem', cardMainBoxWidth: '44rem' })
   // NOTE: openAddNoteModal is the columnId of the column on will add button is clicked.
   const [openAddNoteModal, handleAddNoteModal] = useState(null);
   const { loading, error, data } = useQuery(GET_BOARD_COLUMN_NOTE, { variables: { id }});
@@ -65,19 +65,19 @@ const Notes = props => {
         className={classes.gridList}
         cols={slideConfig.gridColsValue}
         cellHeight="auto"
-        style={{ minHeight: 600 }}
+        style={{ minHeight: 575 }}
         spacing={8}
       >
         {columns.map(({ id, name, notes }) => (
           <GridListTile key={id}>
             <Paper elevation={4} style={{ padding: "1em" }}>
               <Box display="flex" flexDirection="column" alignItems="center">
-                <Box display="flex" flexDirection="row" p={1} style={{ backgroundColor: "#D3D3D3", width: slideConfig.noteMainBoxWidth, borderRadius: '15px' }} >
+                <Box display="flex" flexDirection="row" justifyContent="center" p={1} style={{ backgroundColor: "#D3D3D3", width: slideConfig.noteMainBoxWidth, borderRadius: '15px' }} >
                   <Box
                     display="flex"
                     flexDirection="row"
                     justifyContent="flex-start"
-                    style={{ alignItems: 'center', marginLeft: slideConfig.noteNameMarginLeft}}
+                    style={{ alignItems: 'center'}}
                   >
                     <Typography component="p" variant={slideConfig.columnNameVariant} color="textPrimary">
                       {name}
