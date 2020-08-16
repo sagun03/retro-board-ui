@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 
-export default ({ noteContent, id, handleNoteContent, handleNoteContentMutation }) => {
+export default ({ content, id, handleNoteContentMutation }) => {
   const [openedId, setOpenedId] = useState("");
+  const [noteContent, handleNoteContent] = useState(content);
 
   const handleConversion = () => {
     setOpenedId("");
@@ -35,7 +36,7 @@ export default ({ noteContent, id, handleNoteContent, handleNoteContentMutation 
   ) : (
     <Typography onClick={() => setOpenedId(id)} style={{ textAlign: "center",
     overflowWrap: 'break-word'}} >
-     {noteContent}
+     {content}
     </Typography>
   );
 };

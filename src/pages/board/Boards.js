@@ -1,18 +1,36 @@
-import React, { useState, memo } from "react";
+import React, { useState, memo, useEffect } from "react";
 import { useQuery } from '@apollo/client';
 import CreateBoardModal from "./components/createBoardModal";
 import { GET_BOARDS } from "./graphQL/Query";
 import { Box, Typography, Button } from "@material-ui/core";
 import Fallback from '../fallBack';
 import BoardSection from "./BoardSection";
-
+import { BOARD_CREATED } from './graphQL/Subscriptions';
 
 const Boards = props => {
-  const { loading, error, data = {} } = useQuery(GET_BOARDS);
+  const { loading, error, data = {}, subscribeToMore } = useQuery(GET_BOARDS);
   const [ openModal, handleModal ] = useState(false);
+
+
+  useEffect(() => {
+    //TODO: look why it's not working.
+    subscribeToMore({
+      document: BOARD_CREATED,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const { data: { boardCreated = {} } = {}} = subscriptionData || {};
+        const prevData = JSON.parse(JSON.stringify(prev));
+        const { getBoards = [] } = prevData;
+        prevData.push(boardCreated);
+        return prevData;
+      }
+    })
+  }, [])
+
   const { getBoards = [] } = data;
   if (loading) return 'Loading...';
-  if (error) return `Error! ${error.message}`;
+  if (error){ return `Error! ${error.message}`};
+
   return (
     <Box display="flex" style={{ backgroundColor: "#f4f6ff", minHeight: '40rem'}}>
       <Box

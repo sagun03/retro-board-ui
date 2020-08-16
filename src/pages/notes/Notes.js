@@ -46,7 +46,7 @@ const Notes = props => {
 
   // NOTE: openAddNoteModal is the columnId of the column on will add button is clicked.
   const [openAddNoteModal, handleAddNoteModal] = useState(null);
-  const { loading, error, data } = useQuery(GET_BOARD_COLUMN_NOTE, { variables: { id }});
+  const { loading, error, data, subscribeToMore } = useQuery(GET_BOARD_COLUMN_NOTE, { variables: { id }});
   if (loading) return <div>Loading........</div>
   if (error) return <div>Something went wrong.........</div>
   const { getNotesByBoardId: { name, columns = []} ={} } = data || {};
@@ -130,7 +130,7 @@ if (columns.length <= 2 ) {
                 </Box>
                 <Divider variant="middle" />
                 <Box style={{ width: slideConfig.cardMainBoxWidth, paddingTop: '.5rem' }}>
-                  <MyCard notes={notes} />
+                  <MyCard notes={notes} subscribeToMore={subscribeToMore} />
                 </Box>
               </Box>
             </Paper>
