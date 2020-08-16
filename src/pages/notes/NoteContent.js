@@ -2,19 +2,24 @@ import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 
-export default ({ content, id }) => {
+export default ({ noteContent, id, handleNoteContent, handleNoteContentMutation }) => {
   const [openedId, setOpenedId] = useState("");
+
+  const handleConversion = () => {
+    setOpenedId("");
+    handleNoteContentMutation('content')(noteContent);
+  }
   const handleKeyPress = event => {
     // sepcifically for enter
     if (event.charCode === 13) {
       event.preventDefault();
-      setOpenedId("");
+      handleConversion();
     }
   };
 
   return openedId ? (
     <TextField
-      value={content}
+      value={noteContent}
       autoFocus
       style={{ margin: 2 }}
       id={id}
@@ -23,13 +28,14 @@ export default ({ content, id }) => {
       variant="outlined"
       multiline
       color="secondary"
-      onKeyPress={event => handleKeyPress(event)}
-      onBlur={() => setOpenedId("")}
+      onChange={({target: {value}}) => handleNoteContent(value)}
+      onKeyPress={handleKeyPress}
+      onBlur={handleConversion}
     />
   ) : (
     <Typography onClick={() => setOpenedId(id)} style={{ textAlign: "center",
     overflowWrap: 'break-word'}} >
-      {content}
+     {noteContent}
     </Typography>
   );
 };

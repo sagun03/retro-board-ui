@@ -5,12 +5,12 @@ import CardControl from './CardControl';
 export default ({ notes }) => {
   return (
     <>
-      {notes.map(({ id, content, user }) => (
+      {notes.map((note) => (
         <Card
           style={{ minWidth: "12.5rem", margin: "0.9em" }}
           variant="outlined"
         >
-          <CardControl id={id} content={content} user={user} />
+          <CardControl note={note} />
         </Card>
       ))}
     </>

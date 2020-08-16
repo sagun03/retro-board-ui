@@ -5,6 +5,7 @@ import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import IconButton from "@material-ui/core/IconButton";
+import Badge from "@material-ui/core/Badge";
 import ThumbDownAltIcon from "@material-ui/icons/ThumbDownAlt";
 import CommentIcon from "@material-ui/icons/Comment";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
@@ -13,12 +14,20 @@ import Typography from "@material-ui/core/Typography";
 import { useMutation } from "@apollo/client";
 import { UPDATE_NOTE } from "./graphQl/Mutations";
 import NoteContent from "./NoteContent";
+import DeleteNoteModal from './DeleteNoteModal';
 
-export default ({ id, content, user }) => {
+export default ({note: { id, content, user, likes, dislikes }}) => {
+  const [noteContent, handleNoteContent] = useState(content);
+  const [isDeleteModalOpen, handleDeleteModal] = useState(false);
+  const [updateNote, { loading, data, error }] = useMutation(UPDATE_NOTE)
+  const handleNoteContentMutation = (recognizer) => (value) => {
+     const input = { id, [recognizer]: value}
+      updateNote({variables: { input }});
+  }
   return (
     <>
       <CardContent style={{ backgroundColor: "#E9F4FF" }}>
-        <NoteContent id={id} content={content} />
+        <NoteContent id={id} noteContent={noteContent} handleNoteContent={handleNoteContent} handleNoteContentMutation={handleNoteContentMutation} />
       </CardContent>
       <CardActions>
         {/* TODO: Why flex propery is not working!!!!!!!!!!!!!!  */}
@@ -35,22 +44,25 @@ export default ({ id, content, user }) => {
             </Typography>
           </Box>
           <Box>
-            <IconButton size="small">
+            <IconButton size="small" onClick={() => handleNoteContentMutation('likes')(likes + 1)}>
               <ThumbUpAltIcon fontSize="inherit" />
             </IconButton>
+            {likes}
             <IconButton size="small">
-              <ThumbDownAltIcon fontSize="inherit" />
+              <ThumbDownAltIcon fontSize="inherit" onClick={() => handleNoteContentMutation('dislikes')(dislikes + 1)} />
             </IconButton>
+            {dislikes}
             <IconButton size="small">
               <CommentIcon fontSize="inherit" />
             </IconButton>
             <IconButton size="small">
               <StarBorderIcon fontSize="inherit" />
             </IconButton>
-            <IconButton size="small">
+            <IconButton size="small" onClick={() => handleDeleteModal(true)}>
               <DeleteIcon fontSize="inherit" />
             </IconButton>
           </Box>
+          {isDeleteModalOpen && <DeleteNoteModal id={id} handleDeleteModal={handleDeleteModal} />}
         </Box>
       </CardActions>
     </>
