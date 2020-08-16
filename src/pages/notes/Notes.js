@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import GridList from "@material-ui/core/GridList";
 import Box from "@material-ui/core/Box";
@@ -31,13 +31,37 @@ const styles = theme => ({
 });
 const Notes = props => {
   const { match: { params: { id} = {} } = {}, width, classes } = props;
-  const [slideConfig, setSlideCssConfig] = useState({gridColsValue: 2, columnNameVariant: "h4", columnNameButtonSize: "medium", noteMainBoxWidth: '45rem', cardMainBoxWidth: '44rem' })
+  const [slideConfig, setSlideCssConfig] = useState({gridColsValue: 0, columnNameVariant: "", columnNameButtonSize: "", noteMainBoxWidth: '', cardMainBoxWidth: ''})
+  const handleSetCssConfig = (totalColumn) => {
+    if(totalColumn === 1 || totalColumn === 2) {
+      setSlideCssConfig({gridColsValue: 2, columnNameVariant: "h4", columnNameButtonSize: "medium", noteMainBoxWidth: '45rem', cardMainBoxWidth: '44rem' })
+    } else if(totalColumn === 3) {
+      setSlideCssConfig({gridColsValue: 3, columnNameVariant: "h4", columnNameButtonSize: "medium", noteMainBoxWidth: '29rem', cardMainBoxWidth: '28rem' })
+    } else if (totalColumn === 4) {
+      setSlideCssConfig({gridColsValue: 4, columnNameVariant: "h5", columnNameButtonSize: "small", noteMainBoxWidth: '21.5rem', cardMainBoxWidth: '20.5rem' })
+    } else if (totalColumn === 5) {
+      setSlideCssConfig({gridColsValue: 5, columnNameVariant: "h5", columnNameButtonSize: "small", noteMainBoxWidth: '16.5rem', cardMainBoxWidth: '15.5rem' })
+  }
+}
+
   // NOTE: openAddNoteModal is the columnId of the column on will add button is clicked.
   const [openAddNoteModal, handleAddNoteModal] = useState(null);
   const { loading, error, data } = useQuery(GET_BOARD_COLUMN_NOTE, { variables: { id }});
   if (loading) return <div>Loading........</div>
   if (error) return <div>Something went wrong.........</div>
   const { getNotesByBoardId: { name, columns = []} ={} } = data || {};
+  let defaultSlideValue;
+if (columns.length) {
+if (columns.length <= 2 ) {
+  defaultSlideValue = 100;
+} else if (columns.length === 3) {
+  defaultSlideValue = 64;
+} else if (columns.length === 4) {
+  defaultSlideValue = 32;
+} else if (columns.length === 5) {
+  defaultSlideValue = 0;
+}
+}
   return (
     <>
     {openAddNoteModal && <CreateNoteModal handleAddNoteModal={handleAddNoteModal} columnId={openAddNoteModal} />}
@@ -57,7 +81,9 @@ const Notes = props => {
           variant="contained"
           size="large"
           slideConfig={slideConfig}
-          setSlideCssConfig={setSlideCssConfig}
+          totalColumn={columns.length}
+          handleSetCssConfig={handleSetCssConfig}
+          defaultValue={defaultSlideValue}
         />
         </Box>
         </Box>

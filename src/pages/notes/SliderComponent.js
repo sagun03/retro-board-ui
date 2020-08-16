@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/core/styles';
 import Box from "@material-ui/core/Box";
@@ -49,28 +49,33 @@ import Typography from "@material-ui/core/Typography";
     },
   ];
 const SliderComponent = (props) => {
-  const { setSlideCssConfig } = props;
+  const {  handleSetCssConfig, totalColumn, defaultValue, slideConfig } = props;
+  useEffect(() => {
+    handleSetCssConfig(totalColumn)
+  },[])
+
   const valueLabelFormat = (value) => {
     return marks.findIndex((mark) => mark.value === value) + 1;
   }
   const handleChange = (event, value) => {
+    console.log('value', value, event)
     if(value === 100) {
-      setSlideCssConfig({gridColsValue: 2, columnNameVariant: "h4", columnNameButtonSize: "medium", noteMainBoxWidth: '45rem', cardMainBoxWidth: '44rem' })
+      handleSetCssConfig(2)
     }
     if(value === 64) {
-      setSlideCssConfig({gridColsValue: 3, columnNameVariant: "h4", columnNameButtonSize: "medium", noteMainBoxWidth: '29rem', cardMainBoxWidth: '28rem' })
+      handleSetCssConfig(3)
     }
     if(value === 32) {
-      setSlideCssConfig({gridColsValue: 4, columnNameVariant: "h5", columnNameButtonSize: "small", noteMainBoxWidth: '21.5rem', cardMainBoxWidth: '20.5rem' })
+      handleSetCssConfig(4)
     }
     if(value === 0) {
-      setSlideCssConfig({gridColsValue: 5, columnNameVariant: "h5", columnNameButtonSize: "small", noteMainBoxWidth: '16.5rem', cardMainBoxWidth: '15.5rem' })
+      handleSetCssConfig(5)
     }
   }
   return (
   <Box>
   <Typography gutterBottom variant="h6" align="center">Change Column Width</Typography>
-  <WidthSlider valueLabelDisplay="auto" aria-label="pretto slider" valueLabelFormat={valueLabelFormat}  step={null} defaultValue={100} marks={marks} onChange={handleChange} />
+  <WidthSlider valueLabelDisplay="auto" aria-label="pretto slider" valueLabelFormat={valueLabelFormat}  step={null} defaultValue={defaultValue} marks={marks} onChange={handleChange} />
   </Box>
   )
 }
