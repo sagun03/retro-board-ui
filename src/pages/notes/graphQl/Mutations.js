@@ -13,8 +13,15 @@ const CREATE_NOTE = gql`
 `;
 
 const UPDATE_NOTE = gql`
-  mutation updateNote($input: NoteInput!) {
+  mutation updateNote($input: InputNote!) {
     updateNote(input: $input)
   }
 `;
-export {CREATE_NOTE, UPDATE_NOTE};
+
+const DELETE_NOTE = gql`
+  mutation deleteNote($id: ID!) {
+    deleteNote(id: $id)
+  }
+`;
+
+export {CREATE_NOTE, UPDATE_NOTE, DELETE_NOTE};
