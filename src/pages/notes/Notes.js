@@ -98,7 +98,7 @@ if (columns.length <= 2 ) {
           <GridListTile key={id}>
             <Paper elevation={4} style={{ padding: "1em" }}>
               <Box display="flex" flexDirection="column" alignItems="center">
-                <Box display="flex" flexDirection="row" justifyContent="center" p={1} style={{ backgroundColor: "#D3D3D3", width: slideConfig.noteMainBoxWidth, borderRadius: '15px' }} >
+                <Box display="flex" flexDirection="row" justifyContent="center" p={1} style={{ backgroundColor: "#e9e9ff", width: slideConfig.noteMainBoxWidth, borderRadius: '15px' }} >
                   <Box
                     display="flex"
                     flexDirection="row"
