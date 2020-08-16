@@ -27,7 +27,8 @@ export default ({ content, id }) => {
       onBlur={() => setOpenedId("")}
     />
   ) : (
-    <Typography onClick={() => setOpenedId(id)} style={{ textAlign: "center" }}>
+    <Typography onClick={() => setOpenedId(id)} style={{ textAlign: "center",
+    overflowWrap: 'break-word'}} >
       {content}
     </Typography>
   );

@@ -105,7 +105,7 @@ if (columns.length <= 2 ) {
                     justifyContent="flex-start"
                     style={{ alignItems: 'center'}}
                   >
-                    <Typography component="p" variant={slideConfig.columnNameVariant} color="textPrimary">
+                    <Typography variant={slideConfig.columnNameVariant} color="textPrimary">
                       {name}
                     </Typography>
                     <IconButton size={slideConfig.columnNameButtonSize}>
