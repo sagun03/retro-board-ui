@@ -15,53 +15,8 @@ import { NOTES_UPDATED, NOTE_CREATED } from './graphQl/Subscriptions';
 import NoteContent from "./NoteContent";
 import DeleteNoteModal from './DeleteNoteModal';
 
-export default ({note: { id, content, user, likes, dislikes, columnId }, subscribeToMore}) => {
+export default ({note: { id, content, user, likes, dislikes, columnId }}) => {
   const [isDeleteModalOpen, handleDeleteModal] = useState(false);
-
-  useEffect(() => {
-    //TODO: Subscription running no. of times the notes in the particular column.... Look for solution..
-    subscribeToMore({
-      document: NOTES_UPDATED,
-      variables: { columnId },
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev;
-        const { data: { notesUpdated = {} } = {}} = subscriptionData || {};
-        const prevData = JSON.parse(JSON.stringify(prev));
-        const { getNotesByBoardId: { columns = []} = {} } = prevData;
-        //TODO: if have time look for better way of doing...
-        columns.forEach(({id, notes = []}) => {
-          if (id === notesUpdated.columnId) {
-            let index;
-            notes.forEach((note, idx) => {
-              if (note.id === notesUpdated.id) {
-                index = idx;
-              }
-            });
-            if (index >= 0) {
-              notes[index] = notesUpdated;
-            }
-          }
-        });
-        return prevData;
-      }
-    });
-    subscribeToMore({
-      document: NOTE_CREATED,
-      variables: { columnId },
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev;
-        const { data: { noteCreated = {} } = {}} = subscriptionData || {};
-        const prevData = JSON.parse(JSON.stringify(prev));
-        const { getNotesByBoardId: { columns = []} = {} } = prevData;
-        columns.forEach(({id, notes = []}) => {
-          if (id === noteCreated.columnId) {
-              notes.push(noteCreated);
-          }
-        });
-        return prevData;
-      }
-    })
-  }, []);
 
   const [updateNote, { loading, data, error }] = useMutation(UPDATE_NOTE);
   // TODO: Error handling

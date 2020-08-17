@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 const NOTES_UPDATED = gql`
-  subscription notesUpdated($columnId: ID!) {
-    notesUpdated(columnId: $columnId) {
+  subscription notesUpdated {
+    notesUpdated {
       id
       columnId
       content
@@ -14,8 +14,8 @@ const NOTES_UPDATED = gql`
 `;
 
 const NOTE_CREATED = gql`
-  subscription noteCreated($columnId: ID!) {
-    noteCreated(columnId: $columnId) {
+  subscription noteCreated {
+    noteCreated {
       id
       columnId
       content
