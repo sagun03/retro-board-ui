@@ -13,15 +13,14 @@ const Boards = props => {
 
 
   useEffect(() => {
-    //TODO: look why it's not working.
     subscribeToMore({
       document: BOARD_CREATED,
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
-        const { data: { boardCreated = {} } = {}} = subscriptionData || {};
         const prevData = JSON.parse(JSON.stringify(prev));
+        const { data: { boardCreated = {} } = {}} = subscriptionData || {};
         const { getBoards = [] } = prevData;
-        prevData.push(boardCreated);
+        getBoards.push(boardCreated);
         return prevData;
       }
     })

@@ -5,7 +5,10 @@ const BOARD_CREATED  = gql`
     boardCreated {
       id
       name
-      columns
+      columns {
+        id
+        name
+      }
       type
       status
     }
