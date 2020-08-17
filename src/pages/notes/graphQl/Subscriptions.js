@@ -25,4 +25,16 @@ const NOTE_CREATED = gql`
     }
   }
 `;
-export {NOTES_UPDATED, NOTE_CREATED};
+const NOTE_DELETED = gql`
+  subscription noteDeleted {
+    noteDeleted {
+      id
+      columnId
+      content
+      likes
+      dislikes
+      user
+    }
+  }
+`;
+export {NOTES_UPDATED, NOTE_CREATED, NOTE_DELETED};

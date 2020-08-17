@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Card from "@material-ui/core/Card";
 import CardControl from './CardControl';
-import { NOTES_UPDATED, NOTE_CREATED } from './graphQl/Subscriptions';
+import { NOTES_UPDATED, NOTE_CREATED, NOTE_DELETED } from './graphQl/Subscriptions';
 
 export default ({ notes, subscribeToMore }) => {
   useEffect(() => {
     subscribeToMore({
       document: NOTES_UPDATED,
-      // variables: { columnId },
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
         const { data: { notesUpdated = {} } = {}} = subscriptionData || {};
@@ -32,12 +31,10 @@ export default ({ notes, subscribeToMore }) => {
     });
     subscribeToMore({
       document: NOTE_CREATED,
-      // variables: { columnId },
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
         const { data: { noteCreated = {} } = {}} = subscriptionData || {};
         const prevData = JSON.parse(JSON.stringify(prev));
-        console.log('------here-----');
         const { getNotesByBoardId: { columns = []} = {} } = prevData;
         columns.forEach(({id, notes = []}) => {
           if (id === noteCreated.columnId) {
@@ -47,6 +44,30 @@ export default ({ notes, subscribeToMore }) => {
         return prevData;
       }
     })
+    subscribeToMore({
+      document: NOTE_DELETED,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const { data: { noteDeleted = {} } = {}} = subscriptionData || {};
+        const prevData = JSON.parse(JSON.stringify(prev));
+        const { getNotesByBoardId: { columns = []} = {} } = prevData;
+        //TODO: if have time look for better way of doing...
+        columns.forEach(({id, notes = []}) => {
+          if (id === noteDeleted.columnId) {
+            let index;
+            notes.forEach((note, idx) => {
+              if (note.id === noteDeleted.id) {
+                index = idx;
+              }
+            });
+            if (index >= 0) {
+              notes.splice(index, 1);
+            }
+          }
+        });
+        return prevData;
+      }
+    });
   }, []);
   return (
     <>
