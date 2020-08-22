@@ -11,7 +11,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Typography from "@material-ui/core/Typography";
 import { useMutation } from "@apollo/client";
 import { UPDATE_NOTE } from "./graphQl/Mutations";
-import { NOTES_UPDATED, NOTE_CREATED } from './graphQl/Subscriptions';
 import NoteContent from "./NoteContent";
 import DeleteNoteModal from './DeleteNoteModal';
 

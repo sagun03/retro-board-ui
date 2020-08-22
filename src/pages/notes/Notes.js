@@ -22,6 +22,7 @@ import { GET_BOARD_COLUMN_NOTE } from './graphQl/Queries';
 import { withRouter } from 'react-router-dom';
 import CreateNoteModal from './CreateNoteModal';
 import SliderComponent from './SliderComponent';
+import { NOTES_UPDATED, NOTE_CREATED, NOTE_DELETED } from './graphQl/Subscriptions';
 
 const styles = theme => ({
   gridList: {
@@ -47,9 +48,78 @@ const Notes = props => {
   // NOTE: openAddNoteModal is the columnId of the column on will add button is clicked.
   const [openAddNoteModal, handleAddNoteModal] = useState(null);
   const { loading, error, data, subscribeToMore } = useQuery(GET_BOARD_COLUMN_NOTE, { variables: { id }});
+
+
+  useEffect(() => {
+    subscribeToMore({
+      document: NOTES_UPDATED,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const { data: { notesUpdated = {} } = {}} = subscriptionData || {};
+        const prevData = JSON.parse(JSON.stringify(prev));
+        const { getNotesByBoardId: { columns = []} = {} } = prevData;
+        //TODO: if have time look for better way of doing...
+        columns.forEach(({id, notes = []}) => {
+          if (id === notesUpdated.columnId) {
+            let index;
+            notes.forEach((note, idx) => {
+              if (note.id === notesUpdated.id) {
+                index = idx;
+              }
+            });
+            if (index >= 0) {
+              notes[index] = notesUpdated;
+            }
+          }
+        });
+        return prevData;
+      }
+    });
+    subscribeToMore({
+      document: NOTE_CREATED,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const { data: { noteCreated = {} } = {}} = subscriptionData || {};
+        const prevData = JSON.parse(JSON.stringify(prev));
+        const { getNotesByBoardId: { columns = []} = {} } = prevData;
+        columns.forEach(({id, notes = []}) => {
+          if (id === noteCreated.columnId) {
+              notes.push(noteCreated);
+          }
+        });
+        return prevData;
+      }
+    })
+    subscribeToMore({
+      document: NOTE_DELETED,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) return prev;
+        const { data: { noteDeleted = {} } = {}} = subscriptionData || {};
+        const prevData = JSON.parse(JSON.stringify(prev));
+        const { getNotesByBoardId: { columns = []} = {} } = prevData;
+        //TODO: if have time look for better way of doing...
+        columns.forEach(({id, notes = []}) => {
+          if (id === noteDeleted.columnId) {
+            let index;
+            notes.forEach((note, idx) => {
+              if (note.id === noteDeleted.id) {
+                index = idx;
+              }
+            });
+            if (index >= 0) {
+              notes.splice(index, 1);
+            }
+          }
+        });
+        return prevData;
+      }
+    });
+  }, []);
+
   if (loading) return <div>Loading........</div>
   if (error) return <div>Something went wrong.........</div>
   const { getNotesByBoardId: { name, columns = []} ={} } = data || {};
+
   let defaultSlideValue;
 if (columns.length) {
 if (columns.length <= 2 ) {
@@ -62,6 +132,7 @@ if (columns.length <= 2 ) {
   defaultSlideValue = 0;
 }
 }
+
   return (
     <>
     {openAddNoteModal && <CreateNoteModal handleAddNoteModal={handleAddNoteModal} columnId={openAddNoteModal} />}
