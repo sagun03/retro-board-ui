@@ -3,14 +3,14 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import headerImage from "../home/images/Retro.png";
+import fallbackImage from "../home/images/fallback.gif";
 
 const Fallback = ({openModal, handleModal}) => {
   return (
     <>
       <Box>
         <img
-          src={headerImage}
+          src={fallbackImage}
           alt="random"
           style={{ maxHeight: "50em", maxWidth: "50em", margin: '1.1rem' }}
         />
