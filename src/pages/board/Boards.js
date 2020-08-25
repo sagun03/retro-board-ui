@@ -25,7 +25,6 @@ const Boards = props => {
       }
     })
   }, [])
-
   const { getBoards = [] } = data;
   if (loading) return 'Loading...';
   if (error){ return `Error! ${error.message}`};

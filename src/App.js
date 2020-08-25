@@ -11,7 +11,8 @@ const Home = lazy(() => import("./pages/home"));
 const Fallback = lazy(() => import("./pages/fallBack"));
 const Board = lazy(() => import("./pages/board"));
 const Notes = lazy(() => import("./pages/notes"))
-
+const Login = lazy(() => import("./pages/login"))
+console.log('&&&&&&&&&&&&&', localStorage.getItem('token'))
 function App() {
   return (
     <Router>
@@ -24,8 +25,8 @@ function App() {
               <Route exact path="/">
                 <Redirect to="/home" />
               </Route>
-              <AuthRoutes exact path="/home" component={Home} />
-              {/* <PrivateRoutes path="/home-page" component={Home} /> */}
+              <AuthRoutes exact path="/login" component={Login} />
+              <AuthRoutes path="/home" component={Home} />
               <PrivateRoutes exact path="/board" component={Board} />
               <PrivateRoutes exact path="/notes/:id" component={Notes} />
               <PrivateRoutes component={Fallback} />

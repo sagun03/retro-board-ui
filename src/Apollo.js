@@ -4,7 +4,8 @@ import {
   InMemoryCache,
   ApolloProvider,
   split,
-  HttpLink
+  HttpLink,
+  ApolloLink,
 } from "@apollo/client";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
@@ -19,7 +20,19 @@ const wsLink = new WebSocketLink({
 const httpLink = new HttpLink({
   uri: "http://localhost:7001/graphql"
 });
+const authLink = new ApolloLink((operation, forward) => {
+  // Retrieve the authorization token from local storage.
+const token = localStorage.getItem('token')
+  // Use the setContext method to set the HTTP headers.
+  operation.setContext({
+    headers: {
+      authorization: token ? `JWT ${token}` : ''
+    }
+  });
 
+  // Call the next link in the middleware chain.
+  return forward(operation);
+});
 const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
@@ -32,7 +45,7 @@ const splitLink = split(
   httpLink
 );
 const client = new ApolloClient({
-  link: splitLink,
+  link: authLink.concat(splitLink),
   cache: new InMemoryCache(
     {addTypename: false}
   )

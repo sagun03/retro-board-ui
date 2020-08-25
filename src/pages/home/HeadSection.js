@@ -157,7 +157,7 @@ Retrospectives 🔥
                           className={classes.extraLargeButton}
                           classes={{ label: classes.extraLargeButtonLabel }}
                         >
-                          <Link to="/board" className={classes.style}>Get Started</Link>
+                          <Link to="/login" className={classes.style}>Get Started</Link>
                         </Button>
                       </div>
                     </Box>

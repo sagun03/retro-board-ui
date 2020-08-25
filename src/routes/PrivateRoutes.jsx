@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import PrivateLayout from '../layouts/privateLayout/PrivateLayout';
 
+const token = localStorage.getItem('token')
+console.log('token', token)
 const PrivateRoutes = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={matchProps => (
-      // localStorage.Token
-        // ? (
+      (token && (token !== "undefiend" && token !== "undefined")) ? (
           <PrivateLayout>
             <Component {...matchProps} {...rest} />
           </PrivateLayout>
-        // )
-        // : <Redirect to="/home-page" />
+        ) : <Redirect to="/home" />
     )}
   />
 );

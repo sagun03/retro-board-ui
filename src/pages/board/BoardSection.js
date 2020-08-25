@@ -17,9 +17,21 @@ function BoardSection(props) {
   return (
     <Box style={{ backgroundColor: "#FFFFFF", paddingBottom: "5rem", minHeight: "30rem" }}>
       <Box style={{padding: '1rem'}}>
+        <Box display="flex" justifyContent="space-between">
         <Typography variant="h4" align="left" style={{ margin: "2.1rem 4rem 3.2rem" }}>
           Boards
         </Typography>
+        <Box  display="flex" >
+        <Button
+          style={{ height: "2rem" }}
+          color="secondary"
+          variant="contained"
+          onClick={() => localStorage.setItem('token', undefined)}
+        >
+          Logout temprary
+        </Button>
+        </Box>
+        </Box>
         <Box className="container-fluid">
           <Grid container spacing={calculateSpacing(width)}>
             {getBoardData.map(({ name, status, id }) => (

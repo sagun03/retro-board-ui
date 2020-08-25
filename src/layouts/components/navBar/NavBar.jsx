@@ -87,6 +87,7 @@ const NavBar = (props) => {
     },
     {
       name: "Login",
+      link: "/login",
       onClick: () => {},
       icon: <LockOpenIcon className="text-white" />
     }
