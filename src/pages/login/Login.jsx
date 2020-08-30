@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import Avatar from "@material-ui/core/Avatar";
@@ -14,8 +14,9 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Email from "@material-ui/icons/Email";
+import { withApollo } from '@apollo/react-hoc';
 import Person from "@material-ui/icons/Person";
-import { LOGIN } from './graphql/Mutation';
+import { LOGIN, GOOGLE_LOGIN } from './graphql/Mutation';
 import { useMutation } from '@apollo/client';
 import { withRouter } from 'react-router-dom';
 
@@ -73,6 +74,7 @@ const styles = theme => ({
 });
 
 const Login = (props) => {
+  const windowRef = useRef(null)
   const [dataUser, setDataUser] = useState({
     name: "",
     email: ""
@@ -81,7 +83,8 @@ const Login = (props) => {
     name: false,
     email: false
   });
-  const [userLogin, { loading }] = useMutation(LOGIN)
+  const [Login, { loading }] = useMutation(LOGIN)
+  const [googleLogin, { }] = useMutation(GOOGLE_LOGIN);
 
   const handlerChange = field => event => {
     setDataUser({ ...dataUser, [field]: event.target.value })
@@ -99,14 +102,25 @@ const Login = (props) => {
   };
   const handlerSubmit = async () => {
     const { history } = props;
-    userLogin({ variables: { input: { ...dataUser } }}).then((res) => {
+    Login({ variables: { input: { ...dataUser } }}).then((res) => {
       console.log('res', res)
       const { data: { login: { token }} } = res;
       localStorage.setItem('token', token)
       console.log('setItem', localStorage)
-
       history.push('/board');
     })
+  };
+
+  const handlerGoogleSubmit = async () => {
+    const newWindow = window.open('http://localhost:7001/auth/google','_self')
+    window.onunload = function() {
+      var win = window.opener;
+      if (win.closed) {
+      googleLogin().then((res) => {
+        console.log(res)
+      })
+      }
+  };
   };
 
   const isTouched = () => {
@@ -199,13 +213,29 @@ const Login = (props) => {
                     fullWidth
                     variant="contained"
                     className={classes.submit}
-                    color="primary"
+                    color="secondary"
                     disabled
                   >
                     SIGN IN
                   </Button>
                 )}
               </form>
+              <Typography component="h5" variant="h6" style={{padding: '2rem'}} >
+                OR
+              </Typography>
+              <Typography component="h1" variant="h4" >
+                Login With Google
+              </Typography>
+              <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    className={classes.submit}
+                    color="secondary"
+                    onClick={() => handlerGoogleSubmit()}
+                  >
+                    LOGIN
+                  </Button>
             </Paper>
           </main>
     );
@@ -216,4 +246,4 @@ const Login = (props) => {
   history: PropTypes.shape().isRequired
 };
 
-export default withStyles(styles)(withRouter(Login));
+export default withStyles(styles)(withRouter(withApollo(Login)));

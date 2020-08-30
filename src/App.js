@@ -12,7 +12,8 @@ const Fallback = lazy(() => import("./pages/fallBack"));
 const Board = lazy(() => import("./pages/board"));
 const Notes = lazy(() => import("./pages/notes"))
 const Login = lazy(() => import("./pages/login"))
-console.log('&&&&&&&&&&&&&', localStorage.getItem('token'))
+const LoginGoogle = lazy(() => import("./pages/google/google"))
+
 function App() {
   return (
     <Router>
