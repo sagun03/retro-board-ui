@@ -104,7 +104,7 @@ const Login = (props) => {
     const { history } = props;
     userLogin({ variables: { input: { ...dataUser } }}).then((res) => {
       console.log('res', res)
-      const { data: { login: { token }} } = res;
+      const { data: { userLogin: { token }} } = res;
       localStorage.setItem('token', token)
       console.log('setItem', localStorage)
       history.push('/board');

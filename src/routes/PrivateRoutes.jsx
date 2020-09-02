@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import PrivateLayout from '../layouts/privateLayout/PrivateLayout';
 
-const token = localStorage.getItem('token')
-console.log('token', token)
-const PrivateRoutes = ({ component: Component, ...rest }) => (
+const PrivateRoutes = ({ component: Component, ...rest }) => {
+  const token = localStorage.getItem('token')
+  return (
   <Route
     {...rest}
     render={matchProps => (
@@ -13,10 +13,10 @@ const PrivateRoutes = ({ component: Component, ...rest }) => (
           <PrivateLayout>
             <Component {...matchProps} {...rest} />
           </PrivateLayout>
-        ) : <Redirect to="/home" />
+        ) : <Redirect to="/login" />
     )}
   />
-);
+)};
 PrivateRoutes.propTypes = {
   component: PropTypes.func.isRequired,
 };
