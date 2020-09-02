@@ -7,7 +7,6 @@ import {
   HttpLink,
   ApolloLink,
 } from "@apollo/client";
-import { RestLink } from 'apollo-link-rest';
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 

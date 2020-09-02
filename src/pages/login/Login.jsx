@@ -83,7 +83,7 @@ const Login = (props) => {
     name: false,
     email: false
   });
-  const [Login, { loading }] = useMutation(LOGIN)
+  const [userLogin, { loading }] = useMutation(LOGIN)
   const [googleLogin, { }] = useMutation(GOOGLE_LOGIN);
 
   const handlerChange = field => event => {
@@ -102,7 +102,7 @@ const Login = (props) => {
   };
   const handlerSubmit = async () => {
     const { history } = props;
-    Login({ variables: { input: { ...dataUser } }}).then((res) => {
+    userLogin({ variables: { input: { ...dataUser } }}).then((res) => {
       console.log('res', res)
       const { data: { login: { token }} } = res;
       localStorage.setItem('token', token)
@@ -111,17 +111,17 @@ const Login = (props) => {
     })
   };
 
-  const handlerGoogleSubmit = async () => {
-    const newWindow = window.open('http://localhost:7001/auth/google','_self')
-    window.onunload = function() {
-      var win = window.opener;
-      if (win.closed) {
-      googleLogin().then((res) => {
-        console.log(res)
-      })
-      }
-  };
-  };
+  // const handlerGoogleSubmit = async () => {
+  //   const newWindow = window.open('http://localhost:7001/auth/google','_self')
+  //   window.onunload = function() {
+  //     var win = window.opener;
+  //     if (win.closed) {
+  //     googleLogin().then((res) => {
+  //       console.log(res)
+  //     })
+  //     }
+  // };
+  // };
 
   const isTouched = () => {
     return !!Object.keys(touched).length;
@@ -232,7 +232,7 @@ const Login = (props) => {
                     variant="contained"
                     className={classes.submit}
                     color="secondary"
-                    onClick={() => handlerGoogleSubmit()}
+                    onClick={() => {}}
                   >
                     LOGIN
                   </Button>

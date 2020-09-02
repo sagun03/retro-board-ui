@@ -2,8 +2,8 @@ import { gql } from '@apollo/client';
 import { RestLink } from 'apollo-link-rest';
 
 const LOGIN = gql`
-  mutation login($input: UserInput!) {
-    login(input: $input) {
+  mutation userLogin($input: UserInput!) {
+    userLogin(input: $input) {
       token
       user {
         id
