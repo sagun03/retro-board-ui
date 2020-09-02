@@ -9,11 +9,11 @@ const PrivateRoutes = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={matchProps => (
-      (token && (token !== "undefiend" && token !== "undefined")) ? (
+      // (token && (token !== "undefiend" && token !== "undefined")) ? (
           <PrivateLayout>
             <Component {...matchProps} {...rest} />
           </PrivateLayout>
-        ) : <Redirect to="/home" />
+        // ) : <Redirect to="/home" />
     )}
   />
 );

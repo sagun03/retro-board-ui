@@ -7,7 +7,6 @@ import {
   HttpLink,
   ApolloLink,
 } from "@apollo/client";
-import { RestLink } from 'apollo-link-rest';
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 
@@ -34,7 +33,6 @@ const token = localStorage.getItem('token')
   // Call the next link in the middleware chain.
   return forward(operation);
 });
-const restLink = new RestLink({ uri: "https://localhost:7001/auth/google" });
 const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
@@ -43,12 +41,11 @@ const splitLink = split(
       definition.operation === "subscription"
     );
   },
-  restLink,
   wsLink,
   httpLink
 );
 const client = new ApolloClient({
-  link: ApolloLink.from([authLink, restLink, splitLink]),
+  link: authLink.concat(splitLink),
   cache: new InMemoryCache(
     {addTypename: false}
   )

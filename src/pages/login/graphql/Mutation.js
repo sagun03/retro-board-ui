@@ -15,8 +15,8 @@ const LOGIN = gql`
   }
 `;
 const GOOGLE_LOGIN = gql`
-mutation googleLogin($input: UserInput!) {
-  googleLogin(input: $input) {
+mutation googleLogin {
+  googleLogin {
       token
       user {
         id

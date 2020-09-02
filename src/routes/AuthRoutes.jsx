@@ -7,13 +7,13 @@ const AuthRoutes = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={matchProps => (
-      (token && (token !== "undefiend" && token !== "undefined"))
-      ? <Redirect to="/board" />
-        : (
+      // (token && (token !== "undefiend" && token !== "undefined"))
+      // ? <Redirect to="/board" />
+      //   : (
           <AuthLayout>
             <Component {...matchProps} {...rest} />
           </AuthLayout>
-        )
+        // )
 
     )}
   />

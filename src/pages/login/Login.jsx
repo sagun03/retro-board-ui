@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-expressions */
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import PropTypes from "prop-types";
 import Avatar from "@material-ui/core/Avatar";
@@ -74,7 +74,39 @@ const styles = theme => ({
 });
 
 const Login = (props) => {
+  useEffect(() => {
+    // googleLogin().then((res) => {
+    //   console.log('result ', res);
+    // })
+    console.log('in useEffect')
+    fetch("http://localhost:7001/auth/login/success", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": true
+      }
+    }).then(response => {
+      console.log('response', response)
+      if (response.status === 200) return response.json();
+      throw new Error("failed to authenticate user");
+    })
+    .then(responseJson => {
+      console.log('responseJson', responseJson)
+      const { token, user } = responseJson;
+      setRes({ token, user });
+    })
+    .catch(error => {
+      console.log('innnn', error)
+    });
+  }, [])
   const windowRef = useRef(null)
+  const [res, setRes] = useState({
+    token: '',
+    user: '',
+  })
+  console.log('ressss', res)
   const [dataUser, setDataUser] = useState({
     name: "",
     email: ""
@@ -112,15 +144,16 @@ const Login = (props) => {
   };
 
   const handlerGoogleSubmit = async () => {
+//     let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
+// width=600,height=500,left=500,top=100`;
     const newWindow = window.open('http://localhost:7001/auth/google','_self')
-    window.onunload = function() {
-      var win = window.opener;
-      if (win.closed) {
-      googleLogin().then((res) => {
-        console.log(res)
-      })
-      }
-  };
+  //   var timer = setInterval(function()
+  //     if (newWindow.closed) {
+  //         clearInterval(timer);
+  //         console.log('in handle')
+  //         alert("'Secure Payment' window closed !");
+  //     }
+  // }, 500);
   };
 
   const isTouched = () => {
@@ -129,6 +162,9 @@ const Login = (props) => {
 
   const handle = () => {
     console.log('inhandle')
+    handlerGoogleSubmit().then(() => {
+      console.log('insiaaaddeee hanlde')
+    })
     // this.setState({
     //   loading: false,
     //   dataUser: {name: "" ,email: ""},
@@ -226,16 +262,19 @@ const Login = (props) => {
               <Typography component="h1" variant="h4" >
                 Login With Google
               </Typography>
-              <Button
+              <a href="http://localhost:7001/auth/google">
+    Login with Facebook
+  </a>
+              {/* <Button
                     type="submit"
                     fullWidth
                     variant="contained"
                     className={classes.submit}
                     color="secondary"
-                    onClick={() => handlerGoogleSubmit()}
+                    onClick={() => handle()}
                   >
                     LOGIN
-                  </Button>
+                  </Button> */}
             </Paper>
           </main>
     );
