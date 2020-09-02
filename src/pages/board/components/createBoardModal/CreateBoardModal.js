@@ -16,8 +16,9 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import TextField from "@material-ui/core/TextField";
 import { CREATE_BOARD } from './graphQL/Mutation';
 import { useMutation } from '@apollo/client';
+import {withSnackbar} from '../../../../hoc';
 
-const CreateBoardModal = ({ handleModal, history }) => {
+const CreateBoardModal = ({ handleModal, history, snackbar }) => {
   const [boardContent, handleBoardContent] = useState({ name: "", type: "" , columns: ['']});
   const [createBoard, { data, loading, error }] = useMutation(CREATE_BOARD);
   const handleBoard = recognizer => ({ target: { value } }) => {
@@ -30,6 +31,7 @@ const CreateBoardModal = ({ handleModal, history }) => {
     const { type, name, columns } = boardContent;
     console.log('name, type, columns ', name, type, columns )
     createBoard({ variables: { input: { name, type, columns } }}).then((res) => {
+      snackbar.openSnackbar('Board created successfully', 'success');
       const { data: { createBoard : { id } } } = res;
       history.push(`/notes/${id}`)
     });
@@ -107,4 +109,4 @@ const CreateBoardModal = ({ handleModal, history }) => {
   );
 };
 
-export default CreateBoardModal;
+export default withSnackbar(CreateBoardModal);

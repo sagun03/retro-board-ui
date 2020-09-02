@@ -6,6 +6,7 @@ import PrivateRoutes, { AuthRoutes } from './routes/index';
 import GlobalStyles from "./GlobalStyles";
 import * as serviceWorker from "./serviceWorker";
 import Apollo from './Apollo';
+import SnackbarProvider from './contexts/SnackbarProvider';
 
 const Home = lazy(() => import("./pages/home"));
 const Fallback = lazy(() => import("./pages/fallBack"));
@@ -21,6 +22,7 @@ function App() {
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
           <GlobalStyles />
+          <SnackbarProvider>
           <Suspense fallback={<Fragment />}>
             <Switch>
               <Route exact path="/">
@@ -33,6 +35,7 @@ function App() {
               <PrivateRoutes component={Fallback} />
             </Switch>
           </Suspense>
+          </SnackbarProvider>
         </MuiThemeProvider>
       </Apollo>
     </Router>
